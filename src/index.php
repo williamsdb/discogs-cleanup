@@ -29,6 +29,29 @@ try {
     throw new cleanupException("config.php file not found. Have you renamed from config_dummy.php?.");
 }
 
+// has a recache been requested?
+if (isset($_GET['act']) && $_GET['act'] === 'recache') {
+    // Absolute path to the script
+    $script = __DIR__ . '/recache.php';
+
+    // Escape the path for safety
+    $escapedScript = escapeshellarg($script);
+
+    // Command to run in background
+    $cmd = "php $escapedScript > /dev/null 2>&1 &";
+    $output = [];
+    $out = '';
+    $return_var = 0;
+
+    $last_line = exec($cmd, $output, $return_var);
+
+    if ($return_var !== 0) {
+        $out = "<p>Recache failed with return code $return_var.</p>";
+    } else {
+        $out = "<p>Recache started successfully.</p>";
+    }
+}
+
 // create and connect to the SQLite database to hold the cached data
 try {
     // Specify the path and filename for the SQLite database
@@ -194,6 +217,7 @@ try {
         <img src="favicon-180x180.png" alt="Discogs Cleanup Logo" style="width:48px; height:48px;">
         <h1 style="margin: 0;">Discogs Clean-up</h1>
     </div>
+    <?php if (isset($out)) echo $out; ?>
     <hr style="border: none; border-top: 1px solid #d3d3d3; width: 100%; margin: 16px 0 24px 0;">
     <?php
     try {
@@ -315,7 +339,7 @@ try {
         });
     </script>
     <div class="built-by">
-        <small>Built by <a href="https://neilthompson.me">Neil Thompson</a>.</small>
+        <small>Built by <a href="https://neilthompson.me">Neil Thompson</a>. <a href="./?act=recache">#</a></small>
     </div>
 
 </body>
