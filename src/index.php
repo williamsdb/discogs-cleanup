@@ -56,7 +56,7 @@ if (isset($_GET['act']) && $_GET['act'] === 'recache') {
 try {
     // Specify the path and filename for the SQLite database
     $databasePath = __DIR__ . '/cache.sqlite';
-
+    echo "<p>Database path: $databasePath</p>";
     if (!file_exists($databasePath)) {
         // Create a new SQLite database or connect to an existing one
         $pdo = new PDO('sqlite:' . $databasePath);
