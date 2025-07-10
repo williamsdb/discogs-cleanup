@@ -39,7 +39,7 @@ if (isset($_GET['act']) && $_GET['act'] === 'recache') {
     $escapedScript = escapeshellarg($script);
 
     // Command to run in background
-    $cmd = "$php $escapedScript > /dev/null 2>&1 &";
+    $cmd = "$php $escapedScript ";
     $output = [];
     $out = '';
     $return_var = 0;
@@ -47,6 +47,7 @@ if (isset($_GET['act']) && $_GET['act'] === 'recache') {
     $last_line = exec($cmd, $output, $return_var);
     if ($return_var !== 0) {
         $out = "<p>Recache failed with return code $return_var.</p>";
+        $out .= "<p>Output: " . htmlspecialchars(implode("\n", $output)) . "</p>";
     } else {
         $out = "<p>Recache started successfully.</p>";
     }
