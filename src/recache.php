@@ -18,6 +18,11 @@
 
 class cleanupException extends Exception {}
 
+// CLI-only check
+if (php_sapi_name() !== 'cli') {
+    die("This script must be run from the command line.");
+}
+
 // set error handling
 error_reporting(E_NOTICE);
 ini_set('display_errors', 0);
