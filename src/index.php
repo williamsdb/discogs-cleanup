@@ -31,7 +31,6 @@ try {
 
 // has a recache been requested?
 if (isset($_GET['act']) && $_GET['act'] === 'recache') {
-    file_put_contents(__DIR__ . '/recache.log', '- ' . date('Y-m-d H:i:s') . PHP_EOL, FILE_APPEND);
 
     // Absolute path to the script
     $script = __DIR__ . '/recache.php';
