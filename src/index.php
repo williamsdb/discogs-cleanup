@@ -31,6 +31,8 @@ try {
 
 // has a recache been requested?
 if (isset($_GET['act']) && $_GET['act'] === 'recache') {
+    file_put_contents(__DIR__ . '/recache.log', '- ' . date('Y-m-d H:i:s') . PHP_EOL, FILE_APPEND);
+
     // Absolute path to the script
     $script = __DIR__ . '/recache.php';
 
@@ -38,13 +40,12 @@ if (isset($_GET['act']) && $_GET['act'] === 'recache') {
     $escapedScript = escapeshellarg($script);
 
     // Command to run in background
-    $cmd = "php $escapedScript > /dev/null 2>&1 &";
+    $cmd = "$php $escapedScript > /dev/null 2>&1 &";
     $output = [];
     $out = '';
     $return_var = 0;
 
     $last_line = exec($cmd, $output, $return_var);
-
     if ($return_var !== 0) {
         $out = "<p>Recache failed with return code $return_var.</p>";
     } else {

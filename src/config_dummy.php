@@ -7,5 +7,6 @@ $username = "";
 // Discogs API endpoint
 $endpoint = "https://api.discogs.com/";
 
-// cache time in hours (default is one week)
-$cacheTime = 7824;
+// where is php installed?
+// use 'whereis php' to find the path
+$php = '/usr/bin/php';
