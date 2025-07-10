@@ -40,6 +40,7 @@ if (isset($_GET['act']) && $_GET['act'] === 'recache') {
 
     // Command to run in background
     $cmd = "$php $escapedScript ";
+    echo "<p>$cmd</p>";
     $output = [];
     $out = '';
     $return_var = 0;
