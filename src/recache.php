@@ -33,7 +33,7 @@ try {
 // create and connect to the SQLite database to hold the cached data
 try {
     // Specify the path and filename for the SQLite database
-    $databasePath = './cache.sqlite';
+    $databasePath = __DIR__ . '/cache.sqlite';
 
     if (!file_exists($databasePath)) {
         // Create a new SQLite database or connect to an existing one

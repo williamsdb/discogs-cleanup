@@ -39,8 +39,7 @@ if (isset($_GET['act']) && $_GET['act'] === 'recache') {
     $escapedScript = escapeshellarg($script);
 
     // Command to run in background
-    $cmd = "$php $escapedScript ";
-    echo "<p>$cmd</p>";
+    $cmd = "$php $escapedScript > /dev/null 2>&1 &";
     $output = [];
     $out = '';
     $return_var = 0;
@@ -48,7 +47,6 @@ if (isset($_GET['act']) && $_GET['act'] === 'recache') {
     $last_line = exec($cmd, $output, $return_var);
     if ($return_var !== 0) {
         $out = "<p>Recache failed with return code $return_var.</p>";
-        $out .= "<p>Output: " . htmlspecialchars(implode("\n", $output)) . "</p>";
     } else {
         $out = "<p>Recache started successfully.</p>";
     }
@@ -57,7 +55,7 @@ if (isset($_GET['act']) && $_GET['act'] === 'recache') {
 // create and connect to the SQLite database to hold the cached data
 try {
     // Specify the path and filename for the SQLite database
-    $databasePath = './cache.sqlite';
+    $databasePath = __DIR__ . '/cache.sqlite';
 
     if (!file_exists($databasePath)) {
         // Create a new SQLite database or connect to an existing one
